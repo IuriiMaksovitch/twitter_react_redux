@@ -5,13 +5,15 @@ import { initialState } from "../store/storeConfig";
 export const rootReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_USERNAME:
-            return { ...state, name: action.payload ?? state.name}
+            return { ...state, name: action.payload ?? state.name }
         case SET_AVATAR:
-            return { ...state, avatar: action.payload ?? state.avatar}
+            return { ...state, avatar: action.payload ?? state.avatar }
         case CHANGE_FOLLOWERS:
-            return { ...state, followers: state.followers + action.payload }
+            const resFollowers = state.followers + action.payload;
+            return { ...state, followers: resFollowers < 0 ? state.followers : resFollowers }
         case CHANGE_FOLLOWING:
-            return { ...state, following: state.following + action.payload }
+            const resFollowing = state.following + action.payload;
+            return { ...state, following: resFollowing < 0 ? state.following : resFollowing }
         default: return state;
     }
 }
